@@ -3,7 +3,7 @@
 
 ### Features:
 * Shapes
-** Cone
-** Cylinder
+	* Cone
+	* Cylinder
 * Light
 * mesh 
