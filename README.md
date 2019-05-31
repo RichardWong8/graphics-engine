@@ -1,8 +1,9 @@
 # FinaleOfMyLife
-## Sarar Aseer
+## Sarar Aseer_ Richard Wong
 
 ### Features:
-* Cone
-* Cylinder
-* maybe tetrahedron 
-* maybe square pyramid
+* Shapes
+** Cone
+** Cylinder
+* Light
+* mesh 
