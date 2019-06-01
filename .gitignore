@@ -1,16 +1,20 @@
-# Prerequisites
-*.d
+#image files
+*.ppm
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+#temp files
+*~
 
 # Object files
 *.o
 *.ko
 *.obj
 *.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
+*.pyc
+*.class
 
 # Precompiled Headers
 *.gch
@@ -39,14 +43,3 @@
 # Debug files
 *.dSYM/
 *.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
