@@ -235,7 +235,7 @@ void my_main() {
 
       case MESH:
         //printf("%s", op[i].op.mesh.name);
-        parse_obj(op[i].op.mesh.name);
+        parse_obj(polygons, op[i].op.mesh.name);
         /*
         matrix_mult(peek(systems), polygons);
         reflect = &white;

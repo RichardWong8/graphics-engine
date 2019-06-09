@@ -5,8 +5,8 @@
 #include "matrix.h"
 #include "draw.h"
 
-char ** parse_args(char *line);
-void parse_obj(char *file);
-void add_mesh(struct matrix *vertices, struct matrix *faces);
+void parse_obj(struct matrix *polygons, char *file);
+void add_point_mesh( struct matrix *points, double values[3]);
+void add_mesh(struct matrix *polygons, struct matrix *vertices, struct matrix *faces);
 
 #endif
