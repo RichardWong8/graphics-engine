@@ -236,7 +236,6 @@ void my_main() {
       case MESH:
         //printf("%s", op[i].op.mesh.name);
         parse_obj(polygons, op[i].op.mesh.name);
-        /*
         matrix_mult(peek(systems), polygons);
         reflect = &white;
         if (op[i].op.mesh.constants != NULL) {
@@ -244,7 +243,6 @@ void my_main() {
         }
         draw_polygons(polygons, t, zb, view, lights, num_lights, ambient, reflect);
         polygons->lastcol = 0;
-        */
         break;
 
       case SAVE:

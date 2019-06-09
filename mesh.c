@@ -70,5 +70,24 @@ void add_point_mesh(struct matrix * points, double values[3]) {
   Adds vertices in correct order to polygon matrix
   ====================*/
 void add_mesh(struct matrix *polygons, struct matrix *vertices, struct matrix *faces) {
-  
+  int f;
+  int v1,v2,v3;
+  for (f = 0; f < faces->lastcol; f++) {
+    v1 = (int) faces->m[0][f];
+    v2 = (int) faces->m[1][f];
+    v3 = (int) faces->m[2][f];
+    add_polygon(polygons,
+      vertices->m[0][v1],
+      vertices->m[1][v1],
+      vertices->m[2][v1],
+      vertices->m[0][v2],
+      vertices->m[1][v2],
+      vertices->m[2][v2],
+      vertices->m[0][v3],
+      vertices->m[1][v3],
+      vertices->m[2][v3]
+    );
+  }
+  free_matrix(vertices);
+  free_matrix(faces);
 } //end add_mesh
