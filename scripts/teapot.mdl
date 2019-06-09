@@ -8,7 +8,7 @@ push
     //rotate x 45
     //rotate y -45
     scale 50 50 50
-    mesh :teapot2.obj
+    mesh :teapot.obj
   pop
 display
-save teapot2.png
+save teapot.png
