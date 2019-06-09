@@ -71,21 +71,34 @@ void add_point_mesh(struct matrix * points, double values[3]) {
   ====================*/
 void add_mesh(struct matrix *polygons, struct matrix *vertices, struct matrix *faces) {
   int f;
-  int v1,v2,v3;
+  int v0,v1,v2;
   for (f = 0; f < faces->lastcol; f++) {
-    v1 = (int) faces->m[0][f];
-    v2 = (int) faces->m[1][f];
-    v3 = (int) faces->m[2][f];
+    v0 = ((int) faces->m[0][f]) - 1;
+    v1 = ((int) faces->m[1][f]) - 1;
+    v2 = ((int) faces->m[2][f]) - 1;
+    printf("face: %d %d %d\n", v0, v1, v2);
+    printf("\tvertice/%d : %f %f %f\n", v0,
+      vertices->m[0][v0],
+      vertices->m[1][v0],
+      vertices->m[2][v0]);
+    printf("\tvertice/%d : %f %f %f\n", v1,
+      vertices->m[0][v1],
+      vertices->m[1][v1],
+      vertices->m[2][v1]);
+    printf("\tvertice/%d : %f %f %f\n", v2,
+      vertices->m[0][v2],
+      vertices->m[1][v2],
+      vertices->m[2][v2]);
     add_polygon(polygons,
+      vertices->m[0][v0],
+      vertices->m[1][v0],
+      vertices->m[2][v0],
       vertices->m[0][v1],
       vertices->m[1][v1],
       vertices->m[2][v1],
       vertices->m[0][v2],
       vertices->m[1][v2],
-      vertices->m[2][v2],
-      vertices->m[0][v3],
-      vertices->m[1][v3],
-      vertices->m[2][v3]
+      vertices->m[2][v2]
     );
   }
   free_matrix(vertices);
