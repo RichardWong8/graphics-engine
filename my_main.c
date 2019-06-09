@@ -68,6 +68,7 @@ void my_main() {
   ambient.green = 50;
   ambient.blue = 50;
 
+  /*
   double light[2][3];
   light[LOCATION][0] = 0.5;
   light[LOCATION][1] = 0.75;
@@ -76,6 +77,7 @@ void my_main() {
   light[COLOR][RED] = 255;
   light[COLOR][GREEN] = 255;
   light[COLOR][BLUE] = 255;
+  */
 
   double view[3];
   view[0] = 0;
@@ -111,6 +113,12 @@ void my_main() {
   g.blue = 0;
 
   print_symtab();
+
+  SYMTAB * symbol;
+
+  double lights [MAX_LIGHTS][2][3];
+  int num_lights = 0;
+
   for (i=0;i<lastop;i++) {
 
     printf("%d: ",i);
@@ -163,7 +171,7 @@ void my_main() {
         if (op[i].op.box.constants != NULL) {
           reflect = op[i].op.box.constants->s.c;
         }
-        draw_polygons(polygons, t, zb, view, light, ambient, reflect);
+        draw_polygons(polygons, t, zb, view, lights, num_lights, ambient, reflect);
         polygons->lastcol = 0;
         break;
 
@@ -176,7 +184,7 @@ void my_main() {
         if (op[i].op.sphere.constants != NULL) {
           reflect = op[i].op.sphere.constants->s.c;
         }
-        draw_polygons(polygons, t, zb, view, light, ambient, reflect);
+        draw_polygons(polygons, t, zb, view, lights, num_lights, ambient, reflect);
         polygons->lastcol = 0;
         break;
 
@@ -189,7 +197,7 @@ void my_main() {
         if (op[i].op.torus.constants != NULL) {
           reflect = op[i].op.torus.constants->s.c;
         }
-        draw_polygons(polygons, t, zb, view, light, ambient, reflect);
+        draw_polygons(polygons, t, zb, view, lights, num_lights, ambient, reflect);
         polygons->lastcol = 0;
         break;
 
@@ -204,6 +212,29 @@ void my_main() {
         draw_lines(edges, t, zb, g);
         edges->lastcol = 0;
       	break;
+
+      case LIGHT:
+        //add_symbol is already called in mdl.y?
+        symbol = lookup_symbol(op[i].op.light.p->name);
+        if (num_lights < MAX_LIGHTS) {
+          lights[num_lights][LOCATION][0] = symbol->s.l->l[0];
+          lights[num_lights][LOCATION][1] = symbol->s.l->l[1];
+          lights[num_lights][LOCATION][2] = symbol->s.l->l[2];
+
+          lights[num_lights][COLOR][RED] = symbol->s.l->c[0];
+          lights[num_lights][COLOR][GREEN] = symbol->s.l->c[1];
+          lights[num_lights][COLOR][BLUE] = symbol->s.l->c[2];
+
+          num_lights++;
+        }
+        else {
+          printf("Light limit reached");
+        }
+        break;
+
+      case MESH:
+
+        break;
 
       case SAVE:
       	save_extension(t, op[i].op.save_coordinate_system.p->name);
