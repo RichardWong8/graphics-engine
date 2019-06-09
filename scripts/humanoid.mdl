@@ -1,0 +1,13 @@
+push
+  light blue 2 0.75 1 0 0 255
+  light red 2 0.75 1 255 0 0
+  //light white 2 0.75 1 255 255 255
+  //light white 2 0.75 1 255 255 255
+  move 250 250 0
+  push
+    rotate y -45
+    scale 50 50 50
+    mesh :humanoid.obj
+  pop
+display
+save humanoid.png

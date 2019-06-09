@@ -1,0 +1,14 @@
+push
+  //light blue 2 0.75 1 0 0 255
+  //light red 2 0.75 1 255 0 0
+  light a -2 0.75 1 255 255 255
+  light b 2 0.75 2 255 255 255
+  move 250 250 0
+  push
+    //rotate x 45
+    rotate y -45
+    scale 50 50 50
+    mesh :gourd.obj
+  pop
+display
+save gourd.png

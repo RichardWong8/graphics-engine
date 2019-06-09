@@ -6,6 +6,23 @@
 #include "matrix.h"
 #include "draw.h"
 
+/*======== void parse_args() ==========
+  Inputs:   char *line
+
+  Parses line into arguments
+  ====================*/
+char ** parse_args(char *line){
+  char ** arr = calloc(sizeof(char*), 10);
+  int i = 0;
+  while (line) {
+    arr[i] = strsep(&line, " ");
+    if (strcmp(arr[i], "") != 0) {
+      i++;
+    }
+  }
+  return arr;
+} //end parse_args
+
 /*======== void parse_obj() ==========
   Inputs:   struct matrix *polygons
             char *file
@@ -14,31 +31,66 @@
   Calls add_mesh()
   ====================*/
 void parse_obj(struct matrix *polygons, char *file) {
-
+  //matrices to store object data
   struct matrix * vertices;
   struct matrix * faces;
 
+  //file parsing vars
   FILE *f;
   char line[255];
 
   char type[3];
-  double values[3];
+  double values[4];
 
+  char ** args;
+
+  //initialize matrices, 3 for vertices, 4 for triangle+quadrilateral faces
   vertices = new_matrix(3, 100);
-  faces = new_matrix(3, 100);
+  faces = new_matrix(4, 100);
 
   f = fopen(file, "r");
   while ( fgets(line, sizeof(line), f) != NULL ) {
     line[strlen(line) - 1] = '\0';
-    sscanf(line, "%s %lf %lf %lf", type, values, values+1, values+2);
+    printf("%s\n", line);
+
+    //if vertex,
+    //then sscanf for type, values -> add vertex to vertices
+    if (strncmp(line, "v", 1) == 0) {
+      sscanf(line, "%s %lf %lf %lf", type, values, values+1, values+2);
+      if (strncmp(type, "v", strlen(type)) == 0) {
+        add_point_mesh(vertices, values, VERTEX);
+      }
+    }
+
+    //if face
+    //parse face or values -> add face to faces
+    else if (strncmp(line, "f", 1) == 0) {
+      args = parse_args(line);
+      int i = 0;
+      while (args[i+1]) {
+        //printf(args[i]);
+        values[i] = atof(args[i+1]);
+        i++;
+      }
+      printf("\tparts:%d\n", i);
+      //printf("num args: %s", args[0]);
+      //sscanf(line, "%s %lf %lf %lf", type, values, values+1, values+2);
+      add_point_mesh(faces, values, FACE);
+    }
+    //sscanf(line, "%s", type);
     //printf("%s: %lf %lf %lf\n", type, values[0], values[1], values[2]);
     //printf("%s, %lu\n", type, strlen(type));
+    //printf("type: %s", type);
+    /*
     if (strncmp(type, "v", strlen(type)) == 0) {
+      sscanf(line, "%s %lf %lf %lf", type, values, values+1, values+2);
       add_point_mesh(vertices, values);
     }
     else if (strncmp(type, "f", strlen(type)) == 0) {
+      sscanf(line, "%s %lf %lf %lf", type, values, values+1, values+2);
       add_point_mesh(faces, values);
     }
+    */
   }
 
   add_mesh(polygons, vertices, faces);
@@ -51,7 +103,7 @@ Returns:
 adds point (x, y, z) or face (a, b, c) to points and increment points.lastcol
 if points is full, should call grow on points
 ====================*/
-void add_point_mesh(struct matrix * points, double values[3]) {
+void add_point_mesh(struct matrix * points, double values[4], int type) {
 
   if ( points->lastcol == points->cols )
     grow_matrix( points, points->lastcol + 100 );
@@ -59,6 +111,9 @@ void add_point_mesh(struct matrix * points, double values[3]) {
   points->m[0][ points->lastcol ] = values[0];
   points->m[1][ points->lastcol ] = values[1];
   points->m[2][ points->lastcol ] = values[2];
+  if (type == FACE) {
+    points->m[3][ points->lastcol ] = values[3];
+  }
   points->lastcol++;
 } //end add_point_mesh
 
@@ -71,11 +126,12 @@ void add_point_mesh(struct matrix * points, double values[3]) {
   ====================*/
 void add_mesh(struct matrix *polygons, struct matrix *vertices, struct matrix *faces) {
   int f;
-  int v0,v1,v2;
+  int v0,v1,v2,v3;
   for (f = 0; f < faces->lastcol; f++) {
     v0 = ((int) faces->m[0][f]) - 1;
     v1 = ((int) faces->m[1][f]) - 1;
     v2 = ((int) faces->m[2][f]) - 1;
+    v3 = ((int) faces->m[3][f]) - 1;
     printf("face: %d %d %d\n", v0, v1, v2);
     printf("\tvertice/%d : %f %f %f\n", v0,
       vertices->m[0][v0],
@@ -100,6 +156,21 @@ void add_mesh(struct matrix *polygons, struct matrix *vertices, struct matrix *f
       vertices->m[1][v2],
       vertices->m[2][v2]
     );
+    //if 4th vertex exists
+    if (v3 > 0) {
+      //then it's quadrilateral
+      add_polygon(polygons,
+        vertices->m[0][v0],
+        vertices->m[1][v0],
+        vertices->m[2][v0],
+        vertices->m[0][v2],
+        vertices->m[1][v2],
+        vertices->m[2][v2],
+        vertices->m[0][v3],
+        vertices->m[1][v3],
+        vertices->m[2][v3]
+      );
+    }
   }
   free_matrix(vertices);
   free_matrix(faces);
