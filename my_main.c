@@ -48,6 +48,7 @@
 #include "draw.h"
 #include "stack.h"
 #include "gmath.h"
+#include "mesh.h"
 
 void my_main() {
 
@@ -233,7 +234,17 @@ void my_main() {
         break;
 
       case MESH:
-
+        //printf("%s", op[i].op.mesh.name);
+        parse_obj(op[i].op.mesh.name);
+        /*
+        matrix_mult(peek(systems), polygons);
+        reflect = &white;
+        if (op[i].op.mesh.constants != NULL) {
+          reflect = op[i].op.mesh.constants->s.c;
+        }
+        draw_polygons(polygons, t, zb, view, lights, num_lights, ambient, reflect);
+        polygons->lastcol = 0;
+        */
         break;
 
       case SAVE:
