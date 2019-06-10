@@ -256,6 +256,23 @@ CYLINDER DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE
   lastop++;
 }|
 
+CYLINDER STRING DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE
+{
+  lineno++;
+  op[lastop].opcode = CYLINDER;
+  op[lastop].op.cylinder.d[0] = $3;
+  op[lastop].op.cylinder.d[1] = $4;
+  op[lastop].op.cylinder.d[2] = $5;
+  op[lastop].op.cylinder.d[3] = 0;
+  op[lastop].op.cylinder.r = $6;
+  op[lastop].op.cylinder.h = $7;
+  c = (struct constants *)malloc(sizeof(struct constants));
+  op[lastop].op.cylinder.constants = add_symbol($2,SYM_CONSTANTS,c);
+  op[lastop].op.cylinder.cs = NULL;
+
+  lastop++;
+}|
+
 CONE DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE
 {
   lineno++;
@@ -267,6 +284,23 @@ CONE DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE
   op[lastop].op.cone.r = $5;
   op[lastop].op.cone.h = $6;
   op[lastop].op.cone.constants = NULL;
+  op[lastop].op.cone.cs = NULL;
+
+  lastop++;
+}|
+
+CONE STRING DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE
+{
+  lineno++;
+  op[lastop].opcode = CONE;
+  op[lastop].op.cone.d[0] = $3;
+  op[lastop].op.cone.d[1] = $4;
+  op[lastop].op.cone.d[2] = $5;
+  op[lastop].op.cone.d[3] = 0;
+  op[lastop].op.cone.r = $6;
+  op[lastop].op.cone.h = $7;
+  c = (struct constants *)malloc(sizeof(struct constants));
+  op[lastop].op.cone.constants = add_symbol($2,SYM_CONSTANTS,c);
   op[lastop].op.cone.cs = NULL;
 
   lastop++;

@@ -175,15 +175,8 @@ void my_main() {
         draw_polygons(polygons, t, zb, view, lights, num_lights, ambient, reflect);
         polygons->lastcol = 0;
         break;
-      case CYLINDER:
 
-      	if (op[i].op.cylinder.constants != NULL)
-      	  {
-            reflect = op[i].op.cylinder.constants->s.c;
-      	  }
-      	if (op[i].op.cylinder.cs != NULL)
-      	  {
-      	  }
+      case CYLINDER:
       	add_cylinder(polygons,
       		     op[i].op.cylinder.d[0],
       		     op[i].op.cylinder.d[1],
@@ -191,19 +184,15 @@ void my_main() {
       		     op[i].op.cylinder.r,op[i].op.cylinder.h, step_3d);
       	matrix_mult( peek(systems), polygons );
         reflect = &white;
+        if (op[i].op.cylinder.constants != NULL) {
+          reflect = op[i].op.cylinder.constants->s.c;
+        }
+        if (op[i].op.cylinder.cs != NULL){}
       	draw_polygons(polygons, t, zb, view, lights, num_lights, ambient,reflect);
       	polygons->lastcol = 0;
       	break;
 
       case CONE:
-
-      	if (op[i].op.cone.constants != NULL)
-      	  {
-            reflect = op[i].op.cone.constants->s.c;
-      	  }
-      	if (op[i].op.cone.cs != NULL)
-      	  {
-      	  }
       	add_cone(polygons,
       		 op[i].op.cone.d[0],
       		 op[i].op.cone.d[1],
@@ -211,9 +200,14 @@ void my_main() {
       		 op[i].op.cone.r,op[i].op.cone.h, step_3d);
       	matrix_mult( peek(systems), polygons );
         reflect = &white;
+        if (op[i].op.cone.constants != NULL) {
+          reflect = op[i].op.cone.constants->s.c;
+        }
+        if (op[i].op.cone.cs != NULL){}
       	draw_polygons(polygons, t, zb, view, lights,  num_lights,ambient,reflect);
       	polygons->lastcol = 0;
       	break;
+
       case SPHERE:
         add_sphere(polygons,
           op[i].op.sphere.d[0],op[i].op.sphere.d[1],op[i].op.sphere.d[2],
