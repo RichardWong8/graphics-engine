@@ -289,11 +289,19 @@ void add_cylinder(struct matrix * polygons, double cx, double cy, double cz,
     x1 = r * cos(2 * M_PI * t) + cx;
     z1 = r * sin(2 * M_PI * t) + cz;
 
-    add_polygon(polygons, x0, cy, z0, x1, cy, z1, x1, cy + h, z1);
-    add_polygon(polygons, x0, cy, z0, x1, cy + h, z1, x0, cy + h, z0);
-    add_polygon(polygons, cx, cy, cz,  x1, cy, z1, x0, cy, z0);
-    add_polygon(polygons, cx, cy + h, cz, x0, cy + h, z0, x1, cy + h, z1);
-		
+    add_polygon(polygons, x1, cy + h, z1,
+                          x1, cy, z1,
+                          x0, cy, z0);
+    add_polygon(polygons, x0, cy + h, z0,
+                          x1, cy + h, z1,
+                          x0, cy, z0);
+    add_polygon(polygons, x0, cy, z0,
+                          x1, cy, z1,
+                          cx, cy, cz);
+    add_polygon(polygons, x1, cy + h, z1,
+                          x0, cy + h, z0,
+                          cx, cy + h, cz);
+
     x0 = x1;
     z0 = z1;
   }
@@ -318,9 +326,9 @@ void add_cone(struct matrix * polygons, double cx, double cy, double cz,
     x1 = r * cos(2 * M_PI * t) + cx;
     z1 = r * sin(2 * M_PI * t) + cz;
 
-    add_polygon(polygons, x0, cy, z0, x1, cy, z1, cx, cy + h, cz);
-    add_polygon(polygons, cx, cy, cz,  x1, cy, z1, x0, cy, z0);
-		
+    add_polygon(polygons, cx, cy + h, cz, x1, cy, z1, x0, cy, z0 );
+    add_polygon(polygons, x0, cy, z0, x1, cy, z1, cx, cy, cz);
+
     x0 = x1;
     z0 = z1;
   }
