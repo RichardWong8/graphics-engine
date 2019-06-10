@@ -199,7 +199,7 @@ void my_main() {
 
       	if (op[i].op.cone.constants != NULL)
       	  {
-            reflect = op[i].op.cylinder.constants->s.c;
+            reflect = op[i].op.cone.constants->s.c;
       	  }
       	if (op[i].op.cone.cs != NULL)
       	  {

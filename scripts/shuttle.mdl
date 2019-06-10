@@ -5,7 +5,7 @@ push
     rotate x 45
     rotate y -45
     scale 30 30 30
-    mesh :airboat_tri.obj
+    mesh :shuttle.obj
   pop
 display
-save airboat_tri.png
+save shuttle.png

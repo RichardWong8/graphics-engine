@@ -1,0 +1,12 @@
+push
+  light white 1 1 1 255 255 255
+  move 250 200 0
+  push
+    rotate x -90 // makes z axis vertical axis
+    rotate z -45
+    rotate y 10
+    scale 3 3 3
+    mesh :coop.obj
+  pop
+display
+save coop.png

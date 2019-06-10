@@ -9,6 +9,17 @@
 /*======== void parse_args() ==========
   Inputs:   char *line
 
+  Parses argument for slashes and removes them
+  ====================*/
+char * parse_slash(char *line) {
+  char * s = calloc (sizeof(char), 1);
+  strcpy(s, strsep(&line, "/"));
+  return s;
+}
+
+/*======== void parse_args() ==========
+  Inputs:   char *line
+
   Parses line into arguments
   ====================*/
 char ** parse_args(char *line){
@@ -17,6 +28,7 @@ char ** parse_args(char *line){
   while (line) {
     arr[i] = strsep(&line, " ");
     if (strcmp(arr[i], "") != 0) {
+      arr[i] = parse_slash(arr[i]);
       i++;
     }
   }
@@ -51,7 +63,7 @@ void parse_obj(struct matrix *polygons, char *file) {
   f = fopen(file, "r");
   while ( fgets(line, sizeof(line), f) != NULL ) {
     line[strlen(line) - 1] = '\0';
-    printf("%s\n", line);
+    //printf("%s\n", line);
 
     //if vertex,
     //then sscanf for type, values -> add vertex to vertices
@@ -67,30 +79,14 @@ void parse_obj(struct matrix *polygons, char *file) {
     else if (strncmp(line, "f", 1) == 0) {
       args = parse_args(line);
       int i = 0;
-      while (args[i+1]) {
+      while (args[i+1] && (i < 4)) {
         //printf(args[i]);
         values[i] = atof(args[i+1]);
         i++;
       }
-      printf("\tparts:%d\n", i);
-      //printf("num args: %s", args[0]);
-      //sscanf(line, "%s %lf %lf %lf", type, values, values+1, values+2);
+      //printf("\tparts:%d\n", i);
       add_point_mesh(faces, values, FACE);
     }
-    //sscanf(line, "%s", type);
-    //printf("%s: %lf %lf %lf\n", type, values[0], values[1], values[2]);
-    //printf("%s, %lu\n", type, strlen(type));
-    //printf("type: %s", type);
-    /*
-    if (strncmp(type, "v", strlen(type)) == 0) {
-      sscanf(line, "%s %lf %lf %lf", type, values, values+1, values+2);
-      add_point_mesh(vertices, values);
-    }
-    else if (strncmp(type, "f", strlen(type)) == 0) {
-      sscanf(line, "%s %lf %lf %lf", type, values, values+1, values+2);
-      add_point_mesh(faces, values);
-    }
-    */
   }
 
   add_mesh(polygons, vertices, faces);
@@ -132,7 +128,9 @@ void add_mesh(struct matrix *polygons, struct matrix *vertices, struct matrix *f
     v1 = ((int) faces->m[1][f]) - 1;
     v2 = ((int) faces->m[2][f]) - 1;
     v3 = ((int) faces->m[3][f]) - 1;
+    /*
     printf("face: %d %d %d\n", v0, v1, v2);
+
     printf("\tvertice/%d : %f %f %f\n", v0,
       vertices->m[0][v0],
       vertices->m[1][v0],
@@ -145,6 +143,7 @@ void add_mesh(struct matrix *polygons, struct matrix *vertices, struct matrix *f
       vertices->m[0][v2],
       vertices->m[1][v2],
       vertices->m[2][v2]);
+      */
     add_polygon(polygons,
       vertices->m[0][v0],
       vertices->m[1][v0],
