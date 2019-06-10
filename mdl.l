@@ -26,6 +26,8 @@ ID [a-zA-Z][a-zA-Z0-9_]*
 "torus" { return TORUS;}
 "sphere" { return SPHERE;}
 "box" {return BOX;}
+"cylinder" {return CYLINDER;}
+"cone" {return CONE;}
 "line" {return LINE;}
 "mesh" {return MESH;}
 "texture" {return TEXTURE;}

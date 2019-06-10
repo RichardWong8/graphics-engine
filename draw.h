@@ -54,4 +54,9 @@ void draw_line(int x0, int y0, double z0,
                int x1, int y1, double z1,
                screen s, zbuffer zb, color c);
 
+void add_cylinder(struct matrix * polygons, double cx, double cy, double cz,
+		  double r, double h, int step );
+void add_cone(struct matrix * polygons, double cx, double cy, double cz,
+	      double r, double h, int step );
+
 #endif

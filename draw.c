@@ -271,6 +271,63 @@ void add_box( struct matrix *polygons,
 }
 
 
+void add_cylinder(struct matrix * polygons, double cx, double cy, double cz,
+		  double r, double h, int step ) {
+
+  struct matrix *points = new_matrix(4, step * step);
+  int circle, height, height_start, height_stop, circ_start, circ_stop;
+  double x, y, z, hei, circ, t;
+  double z0, z1, y0, y1, x0, x1;
+
+  int i;
+  x0 = r + cx;
+  y0 = cy;
+  z0 = cz;
+
+  for (i=1; i<=step; i++) {
+    t = (double)i/step;
+    x1 = r * cos(2 * M_PI * t) + cx;
+    z1 = r * sin(2 * M_PI * t) + cz;
+
+    add_polygon(polygons, x0, cy, z0, x1, cy, z1, x1, cy + h, z1);
+    add_polygon(polygons, x0, cy, z0, x1, cy + h, z1, x0, cy + h, z0);
+    add_polygon(polygons, cx, cy, cz,  x1, cy, z1, x0, cy, z0);
+    add_polygon(polygons, cx, cy + h, cz, x0, cy + h, z0, x1, cy + h, z1);
+		
+    x0 = x1;
+    z0 = z1;
+  }
+
+}
+
+void add_cone(struct matrix * polygons, double cx, double cy, double cz,
+	      double r, double h, int step ) {
+
+  struct matrix *points = new_matrix(4, step * step);
+  int circle, height, height_start, height_stop, circ_start, circ_stop;
+  double x, y, z, hei, circ, t;
+  double z0, z1, y0, y1, x0, x1;
+
+  int i;
+  x0 = r + cx;
+  y0 = cy;
+  z0 = cz;
+
+  for (i=1; i<=step; i++) {
+    t = (double)i/step;
+    x1 = r * cos(2 * M_PI * t) + cx;
+    z1 = r * sin(2 * M_PI * t) + cz;
+
+    add_polygon(polygons, x0, cy, z0, x1, cy, z1, cx, cy + h, cz);
+    add_polygon(polygons, cx, cy, cz,  x1, cy, z1, x0, cy, z0);
+		
+    x0 = x1;
+    z0 = z1;
+  }
+
+}
+
+
 /*======== void add_sphere() ==========
   Inputs:   struct matrix * points
             double cx
