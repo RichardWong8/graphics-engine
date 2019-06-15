@@ -1,0 +1,154 @@
+constants blue 0.0215 0.1745 0.0215 0.07568 0.61424 0.07568 0.633 0.727811 0.633
+constants green 0.135	0.2225 0.1575	0.27 0.45	0.33 0.316228	0.316228 0.316228
+constants brown 0.2125 0.714 0.393548 0.1275 0.4284 0.2719 0.054 0.1814 0.166712
+constants grey 0.05 0.5 0.7 .05 .5 .7 0.05 0.5 0.7
+constants yellow 0.3 0.8 0.2 0.3 0.8 0.2 0 0 0
+constants black 0.1 0.1 0.1 0 0 0 0 0 0
+constants orange 1 1 1 1 0 0 1 0 1
+constants car 0.25	0.25	0.25	0.4	0.4	0.4	0.774597	0.774597	0.774597
+
+push
+  light main 0.5 0.5 1 255 255 255
+
+  push
+    move 250 250 0
+    rotate x 45
+    rotate y 45
+
+    // GROUND
+    box green -500 -40 850 1000 10 1000
+
+    // WATER
+    box blue -500 -40 -150 1000 10 1000
+
+    // ASPHALT
+    box grey -500 -30 170 1000 10 220
+
+    // ROAD MARKING
+    box yellow -500 -29 60 1000 10 5
+    box yellow -500 -29 70 1000 10 5
+
+    // TREE TRUNKS
+    push
+      move -210 0 -95
+      cylinder brown 0 -40 0 10 80
+    pop
+    push
+      move -120 0 -95
+      cylinder brown 0 -40 0 10 80
+    pop
+    push
+      move -30 0 -95
+      cylinder brown 0 -40 0 10 80
+    pop
+    push
+      move 60 0 -95
+      cylinder brown 0 -40 0 10 80
+    pop
+    push
+      move 150 0 -95
+      cylinder brown 0 -40 0 10 80
+    pop
+    push
+      move 240 0 -95
+      cylinder brown 0 -40 0 10 80
+    pop
+    push
+      move 330 0 -95
+      cylinder brown 0 -40 0 10 80
+    pop
+
+    // SUNSET LIGHT
+    light sunset -10 10 -1 255 0 0
+
+    // CAR
+    push
+      move 0 -30 5
+      rotate x -90
+      rotate z 270
+      mesh car :coop.obj
+    pop
+
+    // BOAT
+    push
+      move 50 -3 -250
+      scale 15 15 15
+      mesh :airboat.obj
+    pop
+
+    // TRAFFIC CONES
+    push
+      move -120 -30 -20
+      cone orange 0 0 0 15 40
+      box orange -20 2 20 40 5 40
+    pop
+    push
+      move -120 -30 30
+      cone orange 0 0 0 15 40
+      box orange -20 2 20 40 5 40
+    pop
+
+
+    // TREE TOPS
+    push
+      push
+        move -210 0 -95
+        cone green 0 80 0 20 30
+        cone green 0 60 0 25 30
+        cone green 0 40 0 30 30
+        cone green 0 20 0 35 30
+        cone green 0 0 0 40 30
+      pop
+      push
+        move -120 0 -95
+        cone green 0 80 0 20 30
+        cone green 0 60 0 25 30
+        cone green 0 40 0 30 30
+        cone green 0 20 0 35 30
+        cone green 0 0 0 40 30
+      pop
+      push
+        move -30 0 -95
+        cone green 0 80 0 20 30
+        cone green 0 60 0 25 30
+        cone green 0 40 0 30 30
+        cone green 0 20 0 35 30
+        cone green 0 0 0 40 30
+      pop
+      push
+        move 60 0 -95
+        cone green 0 80 0 20 30
+        cone green 0 60 0 25 30
+        cone green 0 40 0 30 30
+        cone green 0 20 0 35 30
+        cone green 0 0 0 40 30
+      pop
+      push
+        move 150 0 -95
+        cone green 0 80 0 20 30
+        cone green 0 60 0 25 30
+        cone green 0 40 0 30 30
+        cone green 0 20 0 35 30
+        cone green 0 0 0 40 30
+      pop
+      push
+        move 240 0 -95
+        cone green 0 80 0 20 30
+        cone green 0 60 0 25 30
+        cone green 0 40 0 30 30
+        cone green 0 20 0 35 30
+        cone green 0 0 0 40 30
+      pop
+      push
+        move 330 0 -95
+        cone green 0 80 0 20 30
+        cone green 0 60 0 25 30
+        cone green 0 40 0 30 30
+        cone green 0 20 0 35 30
+        cone green 0 0 0 40 30
+      pop
+    pop
+  pop
+pop
+display
+save final.png
