@@ -5,5 +5,8 @@
 * Shapes
 	* Cone
 	* Cylinder
-* Light
-* mesh 
+* Light (Loops through all lights in calculations)
+* Mesh (Parses files for triangles and quadrilaterals)
+
+### How to run:
+Type make which runs ./mdl final.mdl
