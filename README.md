@@ -1,7 +1,7 @@
-# FinaleOfMyLife
-## Sarar Aseer_ Richard Wong
+# Stuyvesant, Spring 2019, Computer Graphics, Final Project
+## Sarar Aseer, Richard Wong
 
-### Features:
+### Additional features:
 * Shapes
 	* Cone
 	* Cylinder
